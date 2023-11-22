@@ -28,7 +28,15 @@ npm install
 ```
 
 
-3) Run database migration
+
+3) Copy .env.example to .env and setup the database connection url
+
+```
+cp .env.example .env
+```
+
+
+4) Run database migration
 
 ```
 php bin/console doctrine:migration:migrate
@@ -39,21 +47,21 @@ symfony console doctrine:migration:migrate
 ```
 
 
-4) Start local server
+5) Start local server
 
 ```
 symfony server:start
 ```
 
 
-5) Run the worker to process the message queues
+6) Run the worker to process the message queues
 
 ```
 php bin/console messenger:consume async
 ```
 
 
-6) Open browser
+7) Open browser
 
 ```
 symfony open:local
