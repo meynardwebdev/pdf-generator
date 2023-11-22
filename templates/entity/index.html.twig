@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EntityController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <a class="text-white bg-blue-500 px-5 py-1.5 rounded font-medium text-sm float-right" href="{{ path('create_entity') }}">+ Create Entity</a>
+    <h1 class="mb-2 font-bold text-4xl">
+        Entities
+    </h1>
+    <hr class="py-3" />
+
+    <table class="table-auto border rounded w-full">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="font-medium text-left px-3 py-2 text-base">Name</th>
+                <th class="font-medium text-left px-3 py-2 text-base">Description</th>
+                <th class="font-medium text-left px-3 py-2 text-base">Images</th>
+                <th class="font-medium text-left px-3 py-2 text-base text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if entities|length > 0 %}
+            {% for entity in entities %}
+                <tr class="border px-2 py-2">
+                    <td class="px-2 py-2 font-normal text-sm">{{ entity.name }}</td>
+                    <td class="px-2 py-2 font-normal text-sm">{{ entity.description }}</td>
+                    <td class="px-2 py-2 font-normal text-sm" style="max-width: 250px;">
+                        {% for image in entity.images %}
+                            <img src="{{ asset('uploads/images/' ~ image.path) }}" class="border rounded mr-2 inline-block" style="max-height: 50px;" width="50" height="50" alt="{{ image.path }}" />
+                        {% endfor %}
+                    </td>
+                    <td class="px-2 py-2 font-normal text-sm text-center" style="width: 180px;">
+                        <a class="text-white bg-blue-500 px-5 py-1.5 rounded font-medium text-sm" href="{{ asset('downloads/pdfs/' ~ entity.pdfFile) }}" target="_blank">Download PDF</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="border px-2 py-2" colspan="4">
+                <td class="px-2 py-2 font-normal text-sm">No record(s) yet.</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
