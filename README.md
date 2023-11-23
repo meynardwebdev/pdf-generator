@@ -14,25 +14,24 @@ This is a test project for PDF Generator using DomPDf and Message Queue in Symfo
 
 ## Setting Up the Project 
 
-1) Install composer dependencies
+1) Copy .env.example to .env and setup the database connection url
+
+```
+cp .env.example .env
+```
+
+
+2) Install composer dependencies
 
 ```
 composer install
 ```
 
 
-2) Install frontend dependencies (alternatively yoo can use yarn) 
+3) Install frontend dependencies (alternatively yoo can use yarn) 
 
 ```
 npm install
-```
-
-
-
-3) Copy .env.example to .env and setup the database connection url
-
-```
-cp .env.example .env
 ```
 
 
