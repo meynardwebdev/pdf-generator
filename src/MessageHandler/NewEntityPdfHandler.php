@@ -57,9 +57,10 @@ final class NewEntityPdfHandler
         // Set paper size
         $dompdf->setPaper('A4');
 
-        // Created pdf download dir if it does not exist
+        // Create pdf download dir if it does not exist
         if (!is_dir($this->parameterBag->get('pdf_directory'))) {
-            mkdir($this->parameterBag->get('pdf_directory'));
+            // Recursive dir creation
+            mkdir($this->parameterBag->get('pdf_directory'), 0777, true);
         }
 
         // Save to PDF file
