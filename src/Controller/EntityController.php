@@ -44,23 +44,24 @@ class EntityController extends AbstractController
             $newEntity = $form->getData();
 
             // Get uploaded image(s)
-            $images = $form->get('images')->getData();
+            $images = $form->get('images');
 
-            /** @var Image $image */
             foreach($images as $image)
             {
                 // Create unique image filename
-                $filename = md5(uniqid()) . '.' . $image->guessExtension();
+                $uploadedImage = $image->get('path')->getData();
+                $filename = md5(uniqid()) . '.' . $uploadedImage->guessExtension();
 
                 // Save image to uploads dir
-                $image->move(
+                $uploadedImage->move(
                     $this->getParameter('uploads_directory'), $filename
                 );
 
-                // Instantiate a new Image entity
-                $newImage = new Image();
+                /** @var Image $newImage */
+                $newImage = $image->getData();
+
+                // Set the filename of the Image
                 $newImage->setPath($filename);
-                $newImage->setEntity($entity);
                 $newEntity->addImage($newImage);
             }
 

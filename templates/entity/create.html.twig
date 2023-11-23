@@ -18,13 +18,64 @@
 
             {{ form_widget(form.description) }}
 
-            {{ form_widget(form.images) }}
+            <a href="#" id="js-image-add" class="text-white bg-blue-500 px-2 border rounded py-1 mt-2 float-right text-sm">+ Add Image</a>
 
-            <div class="py-5">
-                {{ form_row(form.save) }}
-                <a class="text-white bg-gray-500 px-5 py-1.5 rounded font-medium text-base float-right mr-2" href="{{ path('entities') }}">Cancel</a>
+            <h3 class="py-2.5">
+                Images
+            </h3>
+            <hr class="mb-2" />
+
+            <div
+                id="js-images-wrapper"
+                class="row mb-5"
+                data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"
+                data-index="{{ form.images|length }}"
+            >
+                {% for image in form.images %}
+                    <div class="col-xs-4 js-images-item">
+                        <a href="#" class="js-remove-image pull-right">
+                            <span class="fa fa-close"></span> Delete
+                        </a>
+                        {{ form_widget(image.path) }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="row py-5 mt-5">
+                {{ form_widget(form.save) }}
+                <a class="text-white bg-gray-500 px-5 py-2.5 rounded font-medium text-base mr-2" href="{{ path('entities') }}">Cancel</a>
             </div>
 
         {{ form_end(form) }}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const wrapper = document.getElementById('js-images-wrapper');
+            const deleteBtn = wrapper.querySelector('.js-remove-image');
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    wrapper.closest('.js-images-item')
+                        .remove();
+                })
+            }
+
+            document.getElementById('js-image-add').addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const prototype = wrapper.dataset.prototype;
+                const index = wrapper.dataset.index;
+                const newImage = prototype.replace(/__name__/g, index).replace(/&quot;/, '"');
+
+
+                wrapper.dataset.index = index + 1;
+                wrapper.insertAdjacentHTML( 'beforeend', newImage );
+            })
+        })
+    </script>
+{% endblock %}
+
