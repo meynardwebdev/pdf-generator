@@ -10,6 +10,7 @@ use Dompdf\Dompdf;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Twig\Environment;
+use function PHPUnit\Framework\directoryExists;
 
 #[AsMessageHandler]
 final class NewEntityPdfHandler
@@ -55,6 +56,11 @@ final class NewEntityPdfHandler
 
         // Set paper size
         $dompdf->setPaper('A4');
+
+        // Created pdf download dir if it does not exist
+        if (!is_dir($this->parameterBag->get('pdf_directory'))) {
+            mkdir($this->parameterBag->get('pdf_directory'));
+        }
 
         // Save to PDF file
         $filename = strtolower(str_replace(' ', '-', $entity->getName())) . uniqid() . '.pdf';

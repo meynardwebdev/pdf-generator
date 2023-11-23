@@ -47,21 +47,36 @@ symfony console doctrine:migration:migrate
 ```
 
 
-5) Start local server
+5) Compile frontend
+
+```
+npm run watch
+
+or
+
+npm run dev
+
+or
+
+npm run build
+```
+
+
+6) Start local server
 
 ```
 symfony server:start
 ```
 
 
-6) Run the worker to process the message queues
+7) Run the worker to process the message queues
 
 ```
 php bin/console messenger:consume async
 ```
 
 
-7) Open browser
+8) Open browser
 
 ```
 symfony open:local

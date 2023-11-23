@@ -32,6 +32,7 @@ node_modules/
 # IDE workspace dir
 .ddev/*
 .idea/*
+.env
 
 public/uploads/images/*
 public/downloads/pdfs/*
